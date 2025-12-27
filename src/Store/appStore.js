@@ -29,11 +29,10 @@ export const appSlice = createSlice({
     // Pass type as increment/decrement and balance
     updateWalletBalance: (state, action) => {
       let updatedBalance = state.userData.walletBalance;
-
-      if (action.type == "increment") {
-        updatedBalance = updatedBalance + action.balance;
-      } else if (action.type == "decrement") {
-        updatedBalance = updatedBalance - action.balance;
+      if (action.payload.type == "increment") {
+        updatedBalance = updatedBalance + action.payload.balance;
+      } else if (action.payload.type == "decrement") {
+        updatedBalance = updatedBalance - action.payload.balance;
       }
 
       state.userData = {
