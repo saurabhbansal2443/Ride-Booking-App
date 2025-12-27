@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-
+import { v4 as uuidv4 } from "uuid";
 const initialState = {
   savedPlaces: [
-    { type: "Home", address: "123 Downtown Home", icon: "Home" },
-    { type: "Work", address: "256 Noida Home", icon: "Work" },
+    { id: uuidv4(), type: "Home", address: "123 Downtown Home" },
+    { id: uuidv4(), type: "Work", address: "256 Noida Home" },
   ],
   userStats: { rating: 4.8, rides: 47, saved: 2.5 },
   userData: {
@@ -47,10 +47,21 @@ export const appSlice = createSlice({
         ...action.payload,
       };
     },
+    // Pass the id of saved place in this
+    deleteSavedPlaces: (state, action) => {
+      let filteredPlaces = state.savedPlaces.filter(
+        (data) => data.id != action.payload.id
+      );
+      state.savedPlaces = filteredPlaces;
+    },
   },
 });
 
-export const { updateRidesAndHours, updateWalletBalance, updateProfileData } =
-  appSlice.actions;
+export const {
+  updateRidesAndHours,
+  updateWalletBalance,
+  updateProfileData,
+  deleteSavedPlaces,
+} = appSlice.actions;
 
 export default appSlice.reducer;
