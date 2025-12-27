@@ -1,9 +1,9 @@
-import { Trash } from "lucide-react";
+import { ChevronRight, Trash } from "lucide-react";
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { deleteSavedPlaces } from "../Store/appStore";
 
-const SavedLocations = () => {
+const SavedLocations = ({ changeDestinationFlag, setDestinationLocation }) => {
   const dispatch = useDispatch();
   const savedPlaces = useSelector((store) => store.app.savedPlaces);
 
@@ -34,15 +34,24 @@ const SavedLocations = () => {
                   {data.address}
                 </p>
               </div>
-
-              <div
-                onClick={() => {
-                  handleDeleteAdress(data.id);
-                }}
-                className="p-2 rounded-lg hover:bg-red-500/20 text-neutral-400 hover:text-red-400 cursor-pointer transition"
-              >
-                <Trash className="w-4 h-4" />
-              </div>
+              {changeDestinationFlag ? (
+                <div
+                  onClick={() => {
+                    setDestinationLocation(data.address);
+                  }}
+                >
+                  <ChevronRight></ChevronRight>
+                </div>
+              ) : (
+                <div
+                  onClick={() => {
+                    handleDeleteAdress(data.id);
+                  }}
+                  className="p-2 rounded-lg hover:bg-red-500/20 text-neutral-400 hover:text-red-400 cursor-pointer transition"
+                >
+                  <Trash className="w-4 h-4" />
+                </div>
+              )}
             </div>
           );
         })}
